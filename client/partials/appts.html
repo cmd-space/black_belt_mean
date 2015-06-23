@@ -1,0 +1,24 @@
+<div>
+    <h1>Doctor's Appointments</h1>
+    <input id="search_appt" type="text" ng-model="filter_appts" placeholder="search...">
+</div>
+<div ng-controller="ApptController">
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Patient Name</th>
+            <th>Complain</th>
+        </tr>
+        <tr>
+            <td>October 7 2014</td>
+            <td>8:00 AM</td>
+            <td>KB Tonel</td>
+            <td>Back pain</td>
+        </tr>
+        <tr ng-repeat="appointment in appointments">
+            <td ng-bind="appointment.date"></td>
+        </tr>
+    </table>
+    <a href="#/new_appointment"><button id="new_appt">Add New Appointment</button></a>
+</div>
