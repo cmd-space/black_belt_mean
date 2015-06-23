@@ -56,25 +56,10 @@
             return factory;
         });
         
-        doc_app.controller('ApptController', function($scope, ApptFactory){
+        doc_app.controller('ApptController', function($scope, ApptFactory, PatientFactory){
             ApptFactory.getAppt(function(data){
-                $scope.appointments = data;
-                console.log($scope.appointments);  
+                $scope.appointments = data; 
             });
-            $scope.addAppt = function(){
-                console.log($scope.new_appt);
-                return;
-                ApptFactory.addAppt($scope.new_appt, function(res){
-                    $scope.appointments = res.results;
-                });
-                $scope.new_appt = {};
-            }
-        });
-        
-        doc_app.controller('PatientController', function($scope, PatientFactory){
-            PatientFactory.getPatient(function(data){
-                $scope.patients = data;
-            });            
             window.onload = function(){
                 $scope.patient_name = prompt('Your Name: ');
                 if($scope.patient_name === null || $scope.patient_name.length === 0){
@@ -94,10 +79,34 @@
                     });
                 }
             }
+            $scope.currentDay = new Date();
+            var month = $scope.currentDay.getMonth();
+            var day = $scope.currentDay.getDate() + 1;
+            var year = $scope.currentDay.getFullYear();
+            $scope.currentDayMin = year + '-0' + month + '-' + day;
+            $scope.addAppt = function(){
+                $scope.new_appt = {date: $scope.new_appt.date, time: $scope.new_appt.time, complain: $scope.new_appt.complain, name: $scope.cust_name, cust_id: $scope.cust_id};
+                // $scope.new_appt.cust_id = $scope.cust_id;
+                console.log($scope.new_appt);
+                if($scope.new_appt.complain.length < 10){
+                    alert('Complain must be longer than 10 characters!');
+                } else{
+                    ApptFactory.addAppt($scope.new_appt, function(res){
+                        $scope.appointments = res.results;
+                        window.location = "#/";
+                    });
+                }
+            }
+        });
+        
+        doc_app.controller('PatientController', function($scope, PatientFactory){
+            PatientFactory.getPatient(function(data){
+                $scope.patients = data;
+            });            
         });
     </script>
 </head>
 <body ng-controller="ApptController">
-    <div id="indent" ng-view="" ng-controller="PatientController"></div>
+    <div id="indent" ng-view=""></div>
 </body>
 </html>

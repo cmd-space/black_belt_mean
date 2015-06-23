@@ -2,7 +2,7 @@
     <h1>Doctor's Appointments</h1>
     <input id="search_appt" type="text" ng-model="filter_appts" placeholder="search...">
 </div>
-<div ng-controller="ApptController">
+<div ng-controller="PatientController">
     <table>
         <tr>
             <th>Date</th>
@@ -17,8 +17,8 @@
             <td>Back pain</td>
         </tr>
         <tr ng-repeat="appointment in appointments | filter: filter_appts">
-            <td ng-bind="appoint.date"></td>
-            <td ng-bind="appointment.time"></td>
+            <td ng-bind="appointment.date | date: 'MMMM d yyyy'"></td>
+            <td ng-bind="appointment.time | date: 'h:mm a'"></td>
             <td ng-bind="appointment.name"></td>
             <td ng-bind="appointment.complain"></td>
         </tr>
