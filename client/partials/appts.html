@@ -16,8 +16,11 @@
             <td>KB Tonel</td>
             <td>Back pain</td>
         </tr>
-        <tr ng-repeat="appointment in appointments">
-            <td ng-bind="appointment.date"></td>
+        <tr ng-repeat="appointment in appointments | filter: filter_appts">
+            <td ng-bind="appoint.date"></td>
+            <td ng-bind="appointment.time"></td>
+            <td ng-bind="appointment.name"></td>
+            <td ng-bind="appointment.complain"></td>
         </tr>
     </table>
     <a href="#/new_appointment"><button id="new_appt">Add New Appointment</button></a>

@@ -58,9 +58,12 @@
         
         doc_app.controller('ApptController', function($scope, ApptFactory){
             ApptFactory.getAppt(function(data){
-                $scope.appointments = data;   
+                $scope.appointments = data;
+                console.log($scope.appointments);  
             });
             $scope.addAppt = function(){
+                console.log($scope.new_appt);
+                return;
                 ApptFactory.addAppt($scope.new_appt, function(res){
                     $scope.appointments = res.results;
                 });
@@ -75,8 +78,10 @@
             window.onload = function(){
                 $scope.patient_name = prompt('Your Name: ');
                 if($scope.patient_name === null || $scope.patient_name.length === 0){
-                    alert('You must enter a valid name!');
-                    $scope.patient_name = prompt('Your Name: ');
+                    while($scope.patient_name === null || $scope.patient_name.length === 0){
+                        alert('You must enter a valid name!');
+                        $scope.patient_name = prompt('Your Name: ');
+                    }
                 } else{
                     PatientFactory.addPatient({name: $scope.patient_name}, function(res){
                         $scope.patients = res.results;
@@ -84,7 +89,7 @@
                             alert(res.error);
                         } else{
                             $scope.cust_id = res[0]._id;
-                            console.log(res[0]._id);
+                            $scope.cust_name = res[0].name;
                         }
                     });
                 }

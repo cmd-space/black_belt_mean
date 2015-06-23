@@ -13,7 +13,7 @@ module.exports = (function(){
             })
         },
         add: function(req, res){
-            var newAppt = new Appointment({date: req.body.date, time: req.body.time, name: req.body.name, complain: req.body.complain, cust_id: req.body.cust_id});
+            var newAppt = new Appointment({date: req.body.date, time: req.body.time, complain: req.body.complain, name: req.body.name, cust_id: req.body.cust_id});
             newAppt.save(function(err, results){
                 if(err){
                     console.log(err);

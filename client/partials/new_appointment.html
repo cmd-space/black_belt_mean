@@ -1,10 +1,10 @@
 <h1>New Appointment</h1>
 <div id="newAppt" ng-controller="ApptController">
-    <p>Date: <input type="date" min="NOW()" ng-model="new_appt.dates"> Time: <input type="time" min="08:00:00" max="17:00:00" ng-model="new_appt.time"></p>
+    <p>Date: <input type="date" ng-model="new_appt.date"> Time: <input type="time" ng-model="new_appt.time" min="07:00:00" max="14:00:00"></p>
     <p>Complain: <textarea ng-model="new_appt.complain"></textarea></p>
     <span ng-controller="PatientController">
-        <input type="hidden" ng-model="new_appt.name" value="patient_name">
-        <input type="hidden" ng-model="new_appt.cust_id" value="$scope.patient._id">
+        <input type="hidden" ng-model="new_appt.name" value="{{cust_name}}">
+        <input type="hidden" ng-model="new_appt.cust_id" value="{{cust_id}}">
         <button id="add_appt" ng-click="addAppt()">Add Appointment</button>
     </span>
 </div>
