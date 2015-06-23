@@ -14,15 +14,16 @@ module.exports = (function(){
         },
         add: function(req, res){
             var newPatient = new Patient({name: req.body.name});
-            var name = req.body.name;
+            console.log(req.body.name);
             newPatient.save(function(err, results){
                 if(err){
                     console.log(err);
                 } else{
-                    Patient.find({name: name}, function(err, results){
+                    Patient.find({name: req.body.name}, function(err, results){
                         if(err){
                             console.log(err);
                         } else{
+                            console.log(results);
                             res.json(results);
                         }
                     });

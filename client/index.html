@@ -51,7 +51,6 @@
             factory.addPatient = function(patient, callback){
                 $http.post('/add_patient', patient).success(function(data){
                     callback(data);
-                    console.log(data);
                 });
             }
             return factory;
@@ -79,18 +78,15 @@
                     alert('You must enter a valid name!');
                     $scope.patient_name = prompt('Your Name: ');
                 } else{
-                    $scope.addPatient = function(){
-                        $scope.new_patient.name = $scope.patient_name;
-                        PatientFactory.addPatient($scope.new_patient, function(res){
-                            $scope.patients = res.results;
-                            if(res.error){
-                                alert(res.error);
-                            } else{
-                                $scope.patient._id = res.results._id;
-                                console.log(res.results._id);
-                            }
-                        });
-                    }
+                    PatientFactory.addPatient({name: $scope.patient_name}, function(res){
+                        $scope.patients = res.results;
+                        if(res.error){
+                            alert(res.error);
+                        } else{
+                            $scope.cust_id = res[0]._id;
+                            console.log(res[0]._id);
+                        }
+                    });
                 }
             }
         });

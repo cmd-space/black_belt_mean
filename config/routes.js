@@ -9,6 +9,7 @@ module.exports = function(app){
         appointments.show(req, res);   
     });
     app.post('/add_patient', function(req, res){
+        console.log('came here');
         patients.add(req, res);
     });
     app.post('/add_appt', function(req, res){
