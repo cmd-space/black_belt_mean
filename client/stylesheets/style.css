@@ -66,3 +66,9 @@ table td{
     margin-top: 1em;
     margin-left: 1em;
 }
+.hideMe{
+    display: none;
+}
+.cancelButton{
+    display: none;
+}

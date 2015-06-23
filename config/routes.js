@@ -14,4 +14,7 @@ module.exports = function(app){
     app.post('/add_appt', function(req, res){
         appointments.add(req, res);
     });
+    app.post('/destroy', function(req, res){
+        appointments.destroy(req, res);
+    });
 }

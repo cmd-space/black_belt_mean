@@ -23,10 +23,14 @@ module.exports = (function(){
                             console.log(err);
                         } else{
                             res.json(results);
+                            console.log(results);
                         }
-                    })
+                    });
                 }
-            })
+            });
+        },
+        destroy: function(req, res){
+            Appointment.find({_id: req.body.id})
         }
     }
 })();
