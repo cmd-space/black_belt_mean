@@ -20,11 +20,13 @@
             <td ng-bind="appointment.date | date: 'MMMM d yyyy'"></td>
             <td ng-bind="appointment.time | date: 'h:mm a'"></td>
             <td ng-bind="appointment.name"></td>
-            <td class="cancel" ng-bind="appointment.complain">
-                <input class='hideMe' type="text" ng-model="cancelId.cust_id" value="{{ appointment.cust_id }}">
-                <input class='hideMe' type="text" ng-model="cancelId.id" value="{{ appointment._id }}">
-                <button class="cancelButton" ng-click="cancelTime()">Cancel</button>
+            <td ng-bind="appointment.complain">
+            <input class='hideMe' type="text" ng-model="cancelId.id" value="{{ appointment._id }}">
+            <button class="cancelButton" ng-if="$rootScope.cust_id == appointment.cust_id" ng-click="cancelTime()">Cancel</button>
+            {{$rootScope.cust_id}}
             </td>
+            <td ng-bind="appointment._id"></td>
+            <td ng-bind="cust_id"></td>
         </tr>
     </table>
     <a href="#/new_appointment"><button id="new_appt">Add New Appointment</button></a>

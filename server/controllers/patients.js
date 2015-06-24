@@ -19,11 +19,11 @@ module.exports = (function(){
                 if(err){
                     console.log(err);
                 } else{
-                    Patient.find({name: req.body.name}, function(err, results){
+                    Patient.find({_id: results._id}, function(err, results){
                         if(err){
                             console.log(err);
                         } else{
-                            console.log(results);
+                            console.log('hopefully just one',results);
                             res.json(results);
                         }
                     });

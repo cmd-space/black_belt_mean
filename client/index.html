@@ -65,26 +65,28 @@
             return factory;
         });
         
-        doc_app.controller('ApptController', function($scope, ApptFactory, PatientFactory){
+        doc_app.controller('ApptController', function($scope, ApptFactory, PatientFactory, $rootScope){
+            // The following comment is used to RESET $rootScope!
+            // $rootScope.patient_name = null;
             ApptFactory.getAppt(function(data){
                 $scope.appointments = data; 
             });
 
             window.onload = function(){
-                $scope.patient_name = prompt('Your Name: ');
-                if($scope.patient_name === null || $scope.patient_name.length === 0){
-                    while($scope.patient_name === null || $scope.patient_name.length === 0){
+                if($rootScope.patient_name === null){
+                    while($rootScope.patient_name === null || $rootScope.patient_name.length === 0){
                         alert('You must enter a valid name!');
-                        $scope.patient_name = prompt('Your Name: ');
+                        $rootScope.patient_name = prompt('Your Name: ');
                     }
-                } else{
-                    PatientFactory.addPatient({name: $scope.patient_name}, function(res){
-                        $scope.patients = res.results;
+                    PatientFactory.addPatient({name: $rootScope.patient_name}, function(res){
+                        // console.log('did not run');
+                        $scope.patients = res;
                         if(res.error){
                             alert(res.error);
                         } else{
-                            $scope.cust_id = res[0]._id;
-                            $scope.cust_name = res[0].name;
+                            console.log(res);
+                            $rootScope.cust_id = res[0]._id;
+                            $rootScope.cust_name = res[0].name;
                         }
                     });
                 }
@@ -97,28 +99,28 @@
             $scope.currentDayMin = year + '-0' + month + '-' + day;
 
             $scope.addAppt = function(){
-                $scope.new_appt = {date: $scope.new_appt.date, time: $scope.new_appt.time, complain: $scope.new_appt.complain, name: $scope.cust_name, cust_id: $scope.cust_id};
+                console.log($rootScope);
+                $scope.new_appt = {date: $scope.new_appt.date, time: $scope.new_appt.time, complain: $scope.new_appt.complain, name: $rootScope.cust_name, cust_id: $rootScope.cust_id};
                 // $scope.new_appt.cust_id = $scope.cust_id;
-                console.log($scope.new_appt);
+                console.log('something',$scope.new_appt);
                 if($scope.new_appt.complain.length < 10){
                     alert('Complain must be longer than 10 characters!');
                 } else{
                     ApptFactory.addAppt($scope.new_appt, function(res){
-                        $scope.appointments = res.results;
-                        console.log(res.results);
-                        // window.location = "#/";
+                        $scope.appointments = res;
                     });
+                    $scope.new_appt = {};
                 }
             }
 
-            $(document).ready(function(){
-                $('.cancel').hover(function(){
-                    if($scope.cust_id == $scope.appointments.cust_id)
-                    $(this).fadeIn(function(){
-                        $('.cancelButton').show();
-                    });
-                });
-            });
+            // $(document).ready(function(){
+            //     $('.cancel').hover(function(){
+            //         if($scope.cust_id == $scope.appointments.cust_id)
+            //         $(this).fadeIn(function(){
+            //             $('.cancelButton').show();
+            //         });
+            //     });
+            // });
 
             $scope.cancelTime = function(){
                 if($scope.cancelId.cust_id == $scope.cust_id){
@@ -129,7 +131,7 @@
             }
         });
         
-        doc_app.controller('PatientController', function($scope, PatientFactory){
+        doc_app.controller('PatientController', function($scope, PatientFactory, $rootScope){
             PatientFactory.getPatient(function(data){
                 $scope.patients = data;
             });            

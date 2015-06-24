@@ -13,6 +13,8 @@ module.exports = (function(){
             })
         },
         add: function(req, res){
+            // find out how to limit to 3 per day
+            // Appointment.find({date: req.body.date});
             var newAppt = new Appointment({date: req.body.date, time: req.body.time, complain: req.body.complain, name: req.body.name, cust_id: req.body.cust_id});
             newAppt.save(function(err, results){
                 if(err){
@@ -23,7 +25,6 @@ module.exports = (function(){
                             console.log(err);
                         } else{
                             res.json(results);
-                            console.log(results);
                         }
                     });
                 }
